@@ -14,7 +14,7 @@ class OrderController extends Controller
      */
     public function index()
     {
-        //
+        echo "chinga tu madrre desde la orden";
     }
 
     /**
@@ -46,7 +46,7 @@ class OrderController extends Controller
      */
     public function show(Order $order)
     {
-        //
+        
     }
 
     /**

@@ -14,7 +14,7 @@ class FoodController extends Controller
      */
     public function index()
     {
-        //
+        echo "chinga desde el food";
     }
 
     /**

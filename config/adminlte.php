@@ -14,7 +14,7 @@ return [
     |
     */
 
-    'title' => 'AdminLTE 3',
+    'title' => 'Restaurant',
     'title_prefix' => '',
     'title_postfix' => '',
 
@@ -236,31 +236,29 @@ return [
             'topnav_right' => true,
         ],
 
-       
         [
-            'text' => 'Pedidos',
-            'url'  => 'admin/blog',
-            'can'  => 'manage-blog',
-        ],
-        [
-            'text'        => 'pages',
-            'url'         => 'admin/pages',
-            'icon'        => 'far fa-fw fa-file',
-            'label'       => 4,
+            'text'        => 'Home',
+            'url'         => '/home',
+            'icon'        => 'fas fa-fw fa-home',
             'label_color' => 'success',
         ],
-        ['header' => 'account_settings'],
         [
-            'text' => 'profile',
-            'url'  => 'admin/settings',
+            'text'        => 'Pedidos',
+            'url'         => '/order',
+            'icon'        => 'fas fa-fw fa-list-ul',
+            'label_color' => 'success',
+        ],
+        [
+            'text' => 'Clientes',
+            'url'  => '/customer',
             'icon' => 'fas fa-fw fa-user',
         ],
         [
-            'text' => 'change_password',
-            'url'  => 'admin/settings',
-            'icon' => 'fas fa-fw fa-lock',
+            'text' => 'Platillos',
+            'url'  => '/food',
+            'icon' => 'fas fa-fw fa-utensils',
         ],
-       
+      
         
     ],
 
