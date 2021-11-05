@@ -3,10 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Models\Customer;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CustomerController extends Controller
 {
+    const RULES =[
+        "name" => "required|alpha_spaces",
+        "email" => "required|email|unique:customers",
+        "phone" => "required|numeric"
+    ];
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +21,8 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        echo "chinga tu madre";
+        return view("customer.index")
+        ->with("customers", Customer::paginate(5) );
     }
 
     /**
@@ -24,7 +32,8 @@ class CustomerController extends Controller
      */
     public function create()
     {
-        //
+        
+        return view("customer.create");
     }
 
     /**
@@ -35,7 +44,10 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate(self::RULES);
+        Customer::create($request->all());
+        return redirect()->route("customer.index")->with("toast_success", "Se creo un nuevo cliente");
+        
     }
 
     /**
@@ -57,7 +69,9 @@ class CustomerController extends Controller
      */
     public function edit(Customer $customer)
     {
-        //
+    
+        return view("customer.edit")
+        ->with("customer", $customer);
     }
 
     /**
@@ -69,7 +83,16 @@ class CustomerController extends Controller
      */
     public function update(Request $request, Customer $customer)
     {
-        //
+        $rules = self::RULES;
+        if($request->has("email"))
+        {
+            if($customer->email == $request->all()['email']){
+                unset($rules['email']);
+            }
+        }
+        $request->validate($rules);
+        $customer->update($request->except("_token"));
+        return redirect()->route("customer.index")->with("toast_success", "Se actualizo correctamente");
     }
 
     /**
@@ -80,6 +103,11 @@ class CustomerController extends Controller
      */
     public function destroy(Customer $customer)
     {
-        //
+        try{
+            $customer->delete();
+        }catch(Exception $e){
+            return redirect()->route("customer.index")->with("toast_error", "Error al eliminar el registro");
+        }
+        return redirect()->route("customer.index")->with("toast_success", "Error al eliminar el registro");
     }
 }

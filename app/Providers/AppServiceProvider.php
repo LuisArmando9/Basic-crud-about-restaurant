@@ -3,6 +3,10 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Routing\UrlGenerator;
+use Illuminate\Support\Facades\URL;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -23,6 +27,15 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        
+        Validator::extend('alpha_spaces', function ($attribute, $value) {
+
+            // This will only accept alpha and spaces. 
+            //https://stackoverflow.com/questions/34099777/laravel-5-1-validation-rule-alpha-cannot-take-whitespace
+            // If you want to accept hyphens use: /^[\pL\s-]+$/u.
+            return preg_match('/^[\pL\s]+$/u', $value); 
+    
+        });
+        Paginator::useBootstrap();
     }
 }

@@ -3,10 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Models\Food;
+use Exception;
 use Illuminate\Http\Request;
 
 class FoodController extends Controller
 {
+    const RULES = [
+        "name" => "required|alpha_spaces",
+        "price" => "required|numeric|gt:0",
+        "description" => "required|alpha_spaces"
+    ];
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +20,8 @@ class FoodController extends Controller
      */
     public function index()
     {
-        echo "chinga desde el food";
+        return view("food.index")
+        ->with("foods", Food::paginate(4));
     }
 
     /**
@@ -24,7 +31,7 @@ class FoodController extends Controller
      */
     public function create()
     {
-        //
+        return view("food.create");
     }
 
     /**
@@ -35,7 +42,9 @@ class FoodController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate(self::RULES);
+        Food::create($request->except("_token"));
+        return redirect()->route("food.index")->with("toast_success", "Se ha creado u nuevo platillo");
     }
 
     /**
@@ -57,7 +66,8 @@ class FoodController extends Controller
      */
     public function edit(Food $food)
     {
-        //
+        return view("food.edit")
+        ->with("food", $food);
     }
 
     /**
@@ -69,7 +79,14 @@ class FoodController extends Controller
      */
     public function update(Request $request, Food $food)
     {
-        //
+        try{
+            $request->validate(self::RULES);
+            $food->update($request->except['_token']);
+            return redirect()->route("food.index")->with("toast_success", "Se ha actualizado el  platillo");
+        }catch(Exception){
+            return redirect()->route("food.index")->with("toast_error", "No se puede actualizar el platillo");
+        }
+        
     }
 
     /**
@@ -80,6 +97,11 @@ class FoodController extends Controller
      */
     public function destroy(Food $food)
     {
-        //
+        try{
+            $food->delete();
+            return redirect()->route("food.index")->with("toast_success", "Se ha eliminado el platillo");
+        }catch(Exception){
+            return redirect()->route("food.index")->with("toast_error", "No se puedo eliminar el platillo");
+        }
     }
 }
