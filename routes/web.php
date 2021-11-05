@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\FoodController;
+use App\Http\Controllers\OrderHasFoodController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -31,5 +32,6 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('/food', FoodController::class);
     Route::resource('/order', OrderController::class);
     Route::resource('/customer', CustomerController::class);
+    Route::resource('/orderhasfood', OrderHasFoodController::class);
 
 });

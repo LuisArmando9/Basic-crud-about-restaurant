@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Customer;
+use App\Models\Food;
+use App\Models\Order;
 use App\Models\Order_Has_Food;
 use Illuminate\Http\Request;
 
@@ -12,9 +15,17 @@ class OrderHasFoodController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        if(!$request->has('order') || !is_numeric( $request->get('order'))){
+            return back();
+        }
+        $order = Order::findOrfail($request->get('order'));
+        $customer = Customer::where("id", $order->customerId)->first();
+        return view("orderhasfood.index")
+        ->with("order",  $order)
+        ->with("customer", $customer)
+        ->with("foods", Food::get());
     }
 
     /**
