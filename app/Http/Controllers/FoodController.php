@@ -78,9 +78,10 @@ class FoodController extends Controller
      */
     public function update(Request $request, Food $food)
     {
+        
         try{
             $request->validate(self::RULES);
-            $food->update($request->except['_token']);
+            $food->update($request->except('_token'));
             return redirect()->route("food.index")->with("toast_success", "Se ha actualizado el  platillo");
         }catch(Exception){
             return redirect()->route("food.index")->with("toast_error", "No se puede actualizar el platillo");

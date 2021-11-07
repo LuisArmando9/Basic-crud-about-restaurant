@@ -79,7 +79,7 @@ class OrderHasFoodController extends Controller
             DB::commit();
         }catch(Exception){
             DB::rollBack();
-            return back()->with("toast_success", "No se pudieron asignar los platillos");
+            return back()->with("toast_error", "No se pudieron asignar los platillos");
         }
         return back()->with("toast_success", "Se asignaron los platillos correctamente");
     }
@@ -105,7 +105,7 @@ class OrderHasFoodController extends Controller
          */
         $newRules = $this->getRules($response);
         if(count($newRules) <= 1){
-            return redirect()->route("orderhasfood.index")->with("toast_error", "No contienes ningun platillo-");            
+            return redirect()->route("orderhasfood.index")->with("toast_error", "No contienes ningun platillo.");            
         }
         $validator = Validator::make($response, $newRules);
         if($validator->fails()){
