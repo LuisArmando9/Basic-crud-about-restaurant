@@ -31,9 +31,7 @@ class AppServiceProvider extends ServiceProvider
     {
         if (config('app.env') === 'production') {
             URL::forceScheme('https');
-        }
-
-        
+        }        
         Validator::extend('alpha_spaces', function ($attribute, $value) {
 
             // This will only accept alpha and spaces. 

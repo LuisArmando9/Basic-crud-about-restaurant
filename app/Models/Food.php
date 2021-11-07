@@ -11,6 +11,7 @@ class Food extends Model
     public $timestamps = true;
     protected $table = "food";
     protected $fillable = [
+        
         'name',
         'price', 
         'description',

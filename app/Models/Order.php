@@ -11,6 +11,7 @@ class Order extends Model
     public $timestamps = true;
     protected $table = "orders";
     protected $fillable = [
+        
         'customerId',
         'status'
     ];

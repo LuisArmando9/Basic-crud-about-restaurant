@@ -6,7 +6,7 @@
 <x-adminlte-card title="Registros" theme="lightblue" theme-mode="outline">
     <div class="container">
         <a class="btn btn-primary p-2" href="customer/create"><i class="fas  fa-plus"></i> Agregar</a>
-    </div>
+    </div>  
     <table class="table">
     <thead>
         <tr>

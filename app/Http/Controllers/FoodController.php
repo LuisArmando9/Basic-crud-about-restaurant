@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Food;
 use Exception;
 use Illuminate\Http\Request;
-
 class FoodController extends Controller
 {
     const RULES = [

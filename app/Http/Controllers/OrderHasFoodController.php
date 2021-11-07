@@ -6,15 +6,38 @@ use App\Models\Customer;
 use App\Models\Food;
 use App\Models\Order;
 use App\Models\Order_Has_Food;
+use RealRashid\SweetAlert\Facades\Alert;
+use Exception;
+use UxWeb\SweetAlert\SweetAlert;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class OrderHasFoodController extends Controller
 {
+
+    const RULES = [
+        "orderId" => "required|exists:orders,id"
+    ];
+    const INPUT_NAME = "food";
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
+
+    private function getRules($response){
+        $newRules = self::RULES;
+
+        foreach($response as $key => $content){
+            $inputName = "food{$content}";
+            if(is_numeric($content) && strtolower($key) === $inputName){
+                $newRules[$inputName] = "required|exists:food,id";
+            }
+        }
+        return $newRules;
+
+    }
     public function index(Request $request)
     {
         if(!$request->has('order') || !is_numeric( $request->get('order'))){
@@ -36,6 +59,29 @@ class OrderHasFoodController extends Controller
     public function create()
     {
         //
+
+
+    }
+    private function insert($response){
+        $orderId = $response["orderId"];
+        $tempData = array();
+        foreach($response as $foodId){
+            array_push($tempData, array(
+                "orderId" => $orderId,
+                "foodId" => $foodId,
+                "created_at" => date("Y-m-d H:i:s"),
+                "updated_at" => date("Y-m-d H:i:s")
+            ));
+        }
+        DB::beginTransaction();
+        try{
+            DB::table("order_has_food")->insert($tempData);
+            DB::commit();
+        }catch(Exception){
+            DB::rollBack();
+            return back()->with("toast_success", "No se pudieron asignar los platillos");
+        }
+        return back()->with("toast_success", "Se asignaron los platillos correctamente");
     }
 
     /**
@@ -46,7 +92,26 @@ class OrderHasFoodController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
+    
+        Alert::success('Congrats', 'You\'ve Successfully Registered');
+        $response = $request->except(["foodId", "_token"]);
+        if(empty($response)){
+            return redirect()->route("orderhasfood.index")->with("toast_error", "No contienes ningun registro");
+        }
+        /**
+         * validate if the new rules contains only the orderId, if this way  return error because it is not  contains records for
+         * store 
+         */
+        $newRules = $this->getRules($response);
+        if(count($newRules) <= 1){
+            return redirect()->route("orderhasfood.index")->with("toast_error", "No contienes ningun platillo-");            
+        }
+        $validator = Validator::make($response, $newRules);
+        if($validator->fails()){
+            return redirect()->route("orderhasfood.index")->with("toast_error", "Error al insertar los datos");
+        }
+        return $this->insert($response);
     }
 
     /**
