@@ -108,6 +108,6 @@ class CustomerController extends Controller
         }catch(Exception $e){
             return redirect()->route("customer.index")->with("toast_error", "Error al eliminar el registro");
         }
-        return redirect()->route("customer.index")->with("toast_success", "Error al eliminar el registro");
+        return redirect()->route("customer.index")->with("toast_success", "Se elimino correctamente el cliente");
     }
 }

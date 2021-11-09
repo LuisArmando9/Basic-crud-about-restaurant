@@ -2,7 +2,7 @@
 @section('content_header')
     <h1>Editar</h1>
 @stop
-@section('content')
+@section('custom_content')
 <x-adminlte-card title="Cliente:{{$customer->name}}" theme="lightblue" theme-mode="outline">
     <form method="POST" action="{{route('customer.update', $customer->id)}}">
         @csrf

@@ -2,7 +2,7 @@
 @section('content_header')
     <h1>Platillos</h1>
 @stop
-@section('content')
+@section('custom_content')
 <x-adminlte-card title="Registros" theme="lightblue" theme-mode="outline">
     <div class="container">
         <a class="btn btn-primary p-2" href="food/create"><i class="fas  fa-plus"></i> Agregar</a>

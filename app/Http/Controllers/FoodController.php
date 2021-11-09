@@ -43,7 +43,7 @@ class FoodController extends Controller
     {
         $request->validate(self::RULES);
         Food::create($request->except("_token"));
-        return redirect()->route("food.index")->with("toast_success", "Se ha creado u nuevo platillo");
+        return redirect()->route("food.index")->with("toast_success", "Se ha creado un nuevo platillo");
     }
 
     /**

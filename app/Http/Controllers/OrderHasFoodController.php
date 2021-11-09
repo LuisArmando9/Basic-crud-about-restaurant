@@ -96,6 +96,7 @@ class OrderHasFoodController extends Controller
     
         Alert::success('Congrats', 'You\'ve Successfully Registered');
         $response = $request->except(["foodId", "_token"]);
+       /* $response = $request->except(["foodId", "_token"]);
         if(empty($response)){
             return redirect()->route("orderhasfood.index")->with("toast_error", "No contienes ningun registro");
         }
@@ -103,14 +104,14 @@ class OrderHasFoodController extends Controller
          * validate if the new rules contains only the orderId, if this way  return error because it is not  contains records for
          * store 
          */
-        $newRules = $this->getRules($response);
+        /*$newRules = $this->getRules($response);
         if(count($newRules) <= 1){
             return redirect()->route("orderhasfood.index")->with("toast_error", "No contienes ningun platillo.");            
         }
         $validator = Validator::make($response, $newRules);
         if($validator->fails()){
             return redirect()->route("orderhasfood.index")->with("toast_error", "Error al insertar los datos");
-        }
+        }*/
         return $this->insert($response);
     }
 

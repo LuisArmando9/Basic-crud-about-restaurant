@@ -2,7 +2,7 @@
 @section('content_header')
     <h1>Crear nuevo platillo</h1>
 @stop
-@section('content')
+@section('custom_content')
 <x-adminlte-card title="Registro" theme="lightblue" theme-mode="outline">
     <form method="POST" action="{{route('food.store')}}">
         @csrf
