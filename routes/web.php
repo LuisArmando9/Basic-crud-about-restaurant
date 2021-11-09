@@ -4,7 +4,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\FoodController;
+use App\Http\Controllers\Char;
 use App\Http\Controllers\OrderHasFoodController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -17,7 +19,7 @@ use App\Http\Controllers\OrderHasFoodController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
 
 Auth::routes();
@@ -35,3 +37,4 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('/orderhasfood', OrderHasFoodController::class);
 
 });
+Route::apiResource("char", Char::class);
