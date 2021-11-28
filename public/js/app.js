@@ -2479,7 +2479,7 @@ var Line = /*#__PURE__*/function () {
               },
               scaleLabel: {
                 display: true,
-                labelString: 'NÚMERO DE ORDENOS POR HORA'
+                labelString: 'NÚMERO DE ORDENES POR HORA'
               }
             }],
             yAxes: [{

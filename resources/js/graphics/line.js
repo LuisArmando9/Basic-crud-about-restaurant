@@ -36,7 +36,7 @@ export default class Line {
                     },
                     scaleLabel: {
                       display: true,
-                      labelString: 'NÚMERO DE ORDENOS POR HORA'
+                      labelString: 'NÚMERO DE ORDENES POR HORA'
                     }
                   }],
                     yAxes: [{
