@@ -55,6 +55,14 @@
             </div>
              
         </div>
+        <!-----------CHAR------------>
+        <div class="row">
+            <div class="col-md-9 bg-white">
+                <canvas id="hours" ></canvas>
+              
+            </div>
+             
+        </div>
         
 
     </div>
@@ -64,6 +72,7 @@
 <script>
     import bar from '../graphics/bar'
     import pie from '../graphics/pie'
+    import line from '../graphics/line'
     export default {
         data(){
             return {
@@ -84,6 +93,9 @@
                     charBar.plot('foods')
                     var charPie = new pie(response.data.status);
                     charPie.plot("status")
+                    console.log(response.data.hours);
+                    var charLine = new line(response.data);
+                    charLine.plot("hours");
                  
                 }, 2000); 
 

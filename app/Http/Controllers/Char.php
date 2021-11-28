@@ -18,6 +18,18 @@ class Char extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    private function getRepeatHours(){
+    
+        $hours = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+        foreach(Order::get(["created_at"]) as $order){
+            $hour = (int)date("H", strtotime($order->created_at));
+            $hours[$hour]++;
+        }
+        return $hours;
+
+
+
+    }
     public function index()
     {
         $foods = DB::table('order_has_food')
@@ -37,8 +49,11 @@ class Char extends Controller
             "orders" => $orders,
             "customers" => Customer::get()->count(),
             "foods" => array($foods, "count" => Order_Has_Food::get()->count()),
-            "status" =>array($status));  
+            "status" =>array($status),
+            "hours" => $this->getRepeatHours());  
         return response()->json( $data);
+        return $this->getRepeatHours();
+
     }
 
     /**
